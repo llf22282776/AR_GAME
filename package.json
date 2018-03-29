@@ -1,0 +1,36 @@
+{
+  "name": "arGame_3",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "build": "start.bat"
+  },
+  "dependencies": {
+    "native-base": "^2.3.10",
+    "prop-types": "^15.6.1",
+    "react": "16.0.0-beta.5",
+    "react-native": "0.49.3",
+    "react-native-modal": "^5.3.0",
+    "react-native-vector-icons": "^4.5.0",
+    "react-navigation": "^1.5.1",
+    "react-navigation-redux-helpers": "^1.0.3",
+    "react-redux": "^5.0.7",
+    "react-viro": "2.4.0",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-promise": "^0.5.3",
+    "redux-promise-middleware": "^5.0.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-jest": "22.4.1",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "22.4.2",
+    "react-test-renderer": "16.0.0-beta.5"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
