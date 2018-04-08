@@ -33,7 +33,7 @@ export default class MainScenePage extends Component {
     }
     render() {
         const { select } = this.props.ar;
-        const { push } = this.props.actions;
+        const { push ,trunToCatchPage} = this.props.actions;
         const { edited } = select;
         console.log("edited:" + edited)
         return (<Container>
@@ -47,10 +47,35 @@ export default class MainScenePage extends Component {
                 <Button block onPress={() => {
                     //跳转页面就ok,这里是捉虫,那就传ar_type 种0 抓1
                     push(route_name.arScene, {
-                        arType: 0,   //种0,这个属性不需要放入到state里面去吗,我想暂时不需要，这个是用来判定捉还是种的页面显示
+                        arType:0,   //种0,这个属性不需要放入到state里面去吗,我想暂时不需要，这个是用来判定捉还是种的页面显示
                     })
                 }}>
                     <Text>种vr虫子</Text>
+                </Button>
+                <Button block onPress={() => {
+
+                    trunToCatchPage(route_name.arScene, {
+                        arType: 1,   //种0,这个属性不需要放入到state里面去吗,我想暂时不需要，这个是用来判定捉还是种的页面显示
+                        index:0,
+                        content:{
+                            rate:0.6,//概率
+                        }
+                    })
+                }}>
+                    <Text>游戏1</Text>
+                </Button>
+                <Button block onPress={() => {
+
+                    trunToCatchPage(route_name.arScene, {
+                        arType: 1,   //种0,这个属性不需要放入到state里面去吗,我想暂时不需要，这个是用来判定捉还是种的页面显示
+                        index: 1,
+                        content:{
+                            question:"这部电影的女主人公是",
+                            answer:"米子哈"
+                        }
+                    })
+                }}>
+                    <Text>游戏2</Text>
                 </Button>
             </Content>
         </Container>)

@@ -42,8 +42,8 @@ export const styles = StyleSheet.create({
     },
     uiControl_header_quitButton_icon: {
         color: "#ffffff",
- 
-        fontSize:16
+
+        fontSize: 16
     },
     uiControl_header_quitButton: {
 
@@ -71,8 +71,32 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between'
 
     },
-    uiControl_catch_bottom: {
-        //种虫的顶部菜单显示所在的view,
+    uiControl_catch_bottom_game2: {
+        //捉虫-底部-游戏2
+        position: 'absolute',
+        display: 'flex',
+        backgroundColor: "#ffffff22",
+        bottom: 200,//距顶部10,
+        left: 10,//全占
+        right: 10,
+        height: 50,
+
+
+    },
+    uiControl_catch_bottom_game2_input: {
+
+        backgroundColor: "#ffffff22",
+        textDecorationColor: "#ffffff"
+
+    },
+    uiControl_catch_bottom_game2_button: {
+        backgroundColor: "#ffffff22",
+        fontSize: 50,
+        textAlign: 'center',
+        color:"#ffffff"
+    },
+    uiControl_catch_bottom_game1: {
+        //捉虫-底部-游戏1
         position: 'absolute',
         display: 'flex',
         backgroundColor: "#ffffff22",
@@ -80,8 +104,14 @@ export const styles = StyleSheet.create({
         left: 10,//全占
         right: 10,
         height: 40,
-        justifyContent: 'center'
+        justifyContent: 'center',
 
+    },
+    uiControl_catch_bottom_game1_text: {
+        //文本提示
+        color: "#ffffff",
+        textAlign: 'center',
+        paddingTop: 5
     },
     uiControl_select_GameImgList: {
         flexDirection: 'column',
@@ -95,7 +125,7 @@ export const styles = StyleSheet.create({
         width: 100,
 
     },
-      uiControl_select_GameImgList_item_hover: {
+    uiControl_select_GameImgList_item_hover: {
         paddingLeft: 10,
         paddingRight: 10,
         paddingTop: 10,
@@ -119,8 +149,57 @@ export const styles = StyleSheet.create({
         left: 10,
         right: 10,
         height: 120,//
-     
+
+    },
+    uiControl_catch_uiCenter_panel: { //中间放置
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        borderRadius: 10,
+        backgroundColor: "#ffffff",
+        height: 500,
+
+    },
+    msg_button_content: {
+        //放置消息的
+        display: "flex",
+
+        justifyContent: 'space-between',
+        flexDirection: "row",
+        alignItems: "flex-end",
+
+    },
+
+    button_icon_style: {
+        //按钮组
+        fontSize: 30,
+        color: "#ffffff",
+        alignSelf: "center"
+    },
+    button_style: {
+        //按钮属性
+        justifyContent: 'center',
+
+        borderRadius: 50,
+        padding: 20,
+        height: 50,
+        flex: 1,
+
+    },
+    content_text_view: {
+        flex: 1,
+        marginTop: 10,
+        marginBottom: 10
+    },
+    content_text: {
+        //包含
+        textAlign: 'center',
+        fontSize: 40,
+        marginBottom: 100,
+        marginTop: 100,
+
     }
+
 })
 
 export const route_name = {
@@ -140,22 +219,20 @@ export const gameList = [
 ]
 
 ViroMaterials.createMaterials({
- grid: {
-    lightingModel: "Blinn",
-    diffuseTexture: require('../resources/res/grid_bg.jpg'),
-  },
+    grid: {
+        lightingModel: "Blinn",
+        diffuseTexture: require('../resources/res/grid_bg.jpg'),
+    },
 });
 ViroAnimations.registerAnimations({
     animateObject: {
         properties: {
-            scaleX: 1,
-            scaleY: .6,
-            scaleZ: 1,
-            opacity: 1,
-            positionZ: 3 //跑到3 
+
+            rotateX: "90"
 
         },
-        easing: "Bounce", duration: 5000
+        easing: "Bounce",
+        duration: 5000
     },
 });
 

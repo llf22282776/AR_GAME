@@ -19,8 +19,6 @@ import {
     Viro3DObject,
     ViroARPlaneSelector,
     ViroARPlane,
-    ViroSpotLight,
-    ViroDirectionalLight,
     ViroMaterials,
     ViroFlexView,
     ViroImage,
@@ -28,7 +26,8 @@ import {
     ViroPortal,
     Viro360Image,
     ViroAmbientLight,
-    ViroParticleEmitter
+    ViroSphere,
+    ViroSpotLight
 } from 'react-viro';
 
 import {
@@ -59,97 +58,81 @@ export default class ARSceneSelectPage extends Component {
 
     constructor(props) {
         super(props);
-        this.renderGameEffect = this.renderGameEffect.bind(this);
+
+        this.renderSelectGame = this.renderSelectGame.bind(this);
+        this.state = {
+            index: this.props.arSceneNavigator.viroAppProps.ar.select.index
+        };
     }
     render() {
-        const { index } = this.props.arSceneNavigator.viroAppProps.ar.select; //监听的index
-        console.log("new index:" + index);
 
-        if (index == 0) {
-            //让一个方块不停跑动的效果
-            return (
-                <ViroARScene>
-                    <ViroAmbientLight color="#ffffff" intensity={200} />
+        console.log("start render select game scene!");
+        return this.renderSelectGame(this.state.index);
 
-                    <ViroNode position={[0, -1, -2]} dragType="FixedToWorld" onDrag={() => { }}>
-                        <ViroSpotLight
-                            innerAngle={5}
-                            outerAngle={25}
-                            direction={[0, -1, 0]}
-                            position={[0, 5, 0]}
-                            color="#ffffff"
-                            castsShadow={true}
-                            shadowMapSize={2048}
-                            shadowNearZ={2}
-                            shadowFarZ={7}
-                            shadowOpacity={.7}
-                        />
 
-                        <Viro3DObject
-                            source={require('../resources/res/icecreamman_anim/icecreamman_anim_a.vrx')}
-                            resources={[require('../resources/res/icecreamman_anim/icecreamman_diffuse.png'),
-                            require('../resources/res/icecreamman_anim/icecreamman_normal.png'),
-                            require('../resources/res/icecreamman_anim/icecreamman_specular.png')]}
-                            position={[0, 0, 0]}
-                            scale={[.5, .5, .5]}
-                            type="VRX"
-                            onClick={this._onTappedIcecream}
-                            animation={{ name: "02", run: true, loop: true, }}
-                        />
+    }
+    componentWillReceiveProps(props_next) {
+        //属性发生改变
+        console.log("props_next");
+        console.log(props_next);
+        this.setState({ index: props_next.arSceneNavigator.viroAppProps.ar.select.index });
 
-                        <ViroSurface
-                            rotation={[-90, 0, 0]}
-                            position={[0, -.001, 0]}
-                            width={2.5} height={2.5}
-                            arShadowReceiver={true}
-                        />
-                    </ViroNode>
+    }
+    renderSelectGame(index) {
+        console.log("index is !!!!!!!!!!!!:" + index);
+        switch (index) {
+            case 0: {
+                //让一个方块不停跑动的效果
+                return (
+                    <ViroARScene>
+                        <ViroAmbientLight color="#ffffff" intensity={200} />
 
-                </ViroARScene>
-            );
-        } else {
-            return (<ViroARScene>
-                <ViroAmbientLight color="#ffffff" intensity={200} />
+                        <ViroNode position={[0, -1, -2]} dragType="FixedToWorld" onDrag={() => { }}>
+           
+                            <Viro3DObject
+                                source={require('../resources/res/icecreamman_anim/icecreamman_anim_a.vrx')}
+                                resources={[require('../resources/res/icecreamman_anim/icecreamman_diffuse.png'),
+                                require('../resources/res/icecreamman_anim/icecreamman_normal.png'),
+                                require('../resources/res/icecreamman_anim/icecreamman_specular.png')]}
+                                position={[0, 0, 0]}
+                                scale={[.5, .5, .5]}
+                                type="VRX"
+                                onClick={this._onTappedIcecream}
+                                animation={{ name: "02", run:false, loop: false, }}
+                            />
 
-                <ViroNode position={[0, -1, -2]} dragType="FixedToWorld" onDrag={() => { }}>
-                    <ViroSpotLight
-                        innerAngle={5}
-                        outerAngle={25}
-                        direction={[0, -1, 0]}
-                        position={[0, 5, 0]}
-                        color="#ffffff"
-                        castsShadow={true}
-                        shadowMapSize={2048}
-                        shadowNearZ={2}
-                        shadowFarZ={7}
-                        shadowOpacity={.7}
-                    />
+                            <ViroSurface
+                                rotation={[-90, 0, 0]}
+                                position={[0, -.001, 0]}
+                                width={2.5} height={2.5}
+                                arShadowReceiver={true}
+                            />
+                        </ViroNode>
 
-                    <ViroBox
-                        position={[0, 0, 0]}
-                        scale={[.8, .8, .8]}
-                        materials={['grid']}
-                    />
+                    </ViroARScene>
+                );
+        
 
-                    <ViroSurface
-                        rotation={[-90, 0, 0]}
-                        position={[0, -.001, 0]}
-                        width={2.5} height={2.5}
-                        arShadowReceiver={true}
-                    />
-                </ViroNode>
+            }
+            case 1: {
+                return (
+                    <ViroARScene>
+                        <ViroAmbientLight color="#ffffff" intensity={200} />
+                        <ViroPortalScene dragType="FixedDistance" passable={true} >
+                            <ViroPortal position={[0, 0, -1]} scale={[.3, .3, .3]}>
+                                <Viro3DObject source={require('../resources/portal_res/portal_wood_frame/portal_wood_frame.vrx')}
+                                    resources={[require('../resources/portal_res/portal_wood_frame/portal_wood_frame_diffuse.png'),
+                                    require('../resources/portal_res/portal_wood_frame/portal_wood_frame_normal.png'),
+                                    require('../resources/portal_res/portal_wood_frame/portal_wood_frame_specular.png')]}
+                                    type="VRX" />
+                            </ViroPortal>
+                            <Viro360Image source={require("../resources/portal_res/2.jpg")} />
+                        </ViroPortalScene>
 
-            </ViroARScene>);
+                    </ViroARScene>);
+            }
+            default: return null;
         }
-
-
     }
-    renderGameEffect(index) {
-        //渲染游戏动画
-
-
-
-    }
-
 
 }
