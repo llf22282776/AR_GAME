@@ -86,14 +86,15 @@ export const styles = StyleSheet.create({
     uiControl_catch_bottom_game2_input: {
 
         backgroundColor: "#ffffff22",
-        textDecorationColor: "#ffffff"
+        textDecorationColor: "#ffffff",
+        color: "#ffffff"
 
     },
     uiControl_catch_bottom_game2_button: {
         backgroundColor: "#ffffff22",
         fontSize: 50,
         textAlign: 'center',
-        color:"#ffffff"
+        color: "#ffffff"
     },
     uiControl_catch_bottom_game1: {
         //捉虫-底部-游戏1
@@ -223,16 +224,31 @@ ViroMaterials.createMaterials({
         lightingModel: "Blinn",
         diffuseTexture: require('../resources/res/grid_bg.jpg'),
     },
+    hud_text_bg: {
+        diffuseColor: "#00ffff"
+    },
+    ground: {
+        diffuseColor: "#ffffff22"
+    },
+    unGround: {
+        diffuseColor: "#ffffff00"
+    },
+    ground_hit: {
+        diffuseColor: "#008141E6"
+    },
+    cube_color: {
+        diffuseColor: "#0021cbE6"
+    }
 });
 ViroAnimations.registerAnimations({
     animateObject: {
         properties: {
 
-            rotateX: "90"
+            rotateX: "-90"
 
         },
         easing: "Bounce",
-        duration: 5000
+        duration:1000
     },
 });
 

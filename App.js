@@ -27,6 +27,7 @@ import AR3dObject from './js/AR3dObject'
 import VRMedio from './js/ARMedio'
 import ARPortalSceneVideo from './js/ARPortalSceneVideo'
 import ARcorton from './js/ARcorton'
+import BasicARPhysicsSample from './js/ImForces'
 /*
  TODO: Insert your API key below
  */
@@ -49,6 +50,7 @@ var BUTTON_TYPE = {
   AR_4: "AR_4",
   AR_5: "AR_5",
   AR_6: "AR_6",
+  AR_7:"AR_7",
 
 
 }
@@ -145,6 +147,13 @@ export default class ViroSample extends Component {
 
             <Text style={localStyles.buttonText}>小动画</Text>
           </TouchableHighlight>
+
+           <TouchableHighlight style={localStyles.buttons}
+            onPress={this._getExperienceButtonOnPress(BUTTON_TYPE.AR_7)}
+            underlayColor={'#68a0ff'} >
+
+            <Text style={localStyles.buttonText}>动力</Text>
+          </TouchableHighlight>
         </ScrollView>
       </View>
     );
@@ -223,10 +232,18 @@ export default class ViroSample extends Component {
       return (
         <ViroARSceneNavigator {...this.state.sharedProps}
           initialScene={{ scene: ARcorton }} onExitViro={this._exitViro} />
-      );
+      )
+
+
+    } else if (type == BUTTON_TYPE.AR_7) {
+      return (
+        <ViroARSceneNavigator {...this.state.sharedProps}
+          initialScene={{ scene: BasicARPhysicsSample }} onExitViro={this._exitViro} />
+      )
 
 
     }
+
   }
   // This function "exits" Viro by setting the navigatorType to UNSET.
   _exitViro() {

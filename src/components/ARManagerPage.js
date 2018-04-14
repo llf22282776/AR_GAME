@@ -67,6 +67,8 @@ export default class ARManagerPage extends Component {
         this.renderUiControlBottom = this.renderUiControlBottom.bind(this);
         this.renderUiControlUiCenter = this.renderUiControlUiCenter.bind(this);
         this.renderImageList = this.renderImageList.bind(this);
+        this.answerQuestion = this.answerQuestion.bind(this);
+
         this.renderMsgContent = this.renderMsgContent.bind(this);
 
         this.state = {
@@ -74,6 +76,8 @@ export default class ARManagerPage extends Component {
             gameList: gameList,
             isVisiable: true,
             msgVisiable: false,
+            answer: "",
+            gameModaiView: false,//游戏二需要的modal
 
         }
 
@@ -92,6 +96,7 @@ export default class ARManagerPage extends Component {
                 {this.renderUiControlBottom(arType, index, content)}
                 {this.renderUiControlUiCenter(arType, this.state.openModalView, index)}
                 {this.renderMsgContent(arType)}
+                
             </View>)
 
 
@@ -99,6 +104,7 @@ export default class ARManagerPage extends Component {
 
 
     }
+    //这里加一个render函数吧
     renderMsgContent(type) {
         console.log("renderMsgContent");
         //退出提示框
@@ -294,8 +300,8 @@ export default class ARManagerPage extends Component {
                         style={styles.uiControl_catch_bottom_game2}>
                         <Item>
 
-                            <Input placeholderTextColor="#ffffff" underlineColorAndroid="#ffffff" style={styles.uiControl_catch_bottom_game2_input} placeholder={content.question} />
-                            <Icon1 style={styles.uiControl_catch_bottom_game2_button} active name='check' />
+                            <Input placeholderTextColor="#ffffff" onChangeText={(text) => { this.setState({ answer: text }) }} underlineColorAndroid="#ffffff" style={styles.uiControl_catch_bottom_game2_input} placeholder={content.question} />
+                            <Icon1 onPress={this.answerQuestion} style={styles.uiControl_catch_bottom_game2_button} active name='check' />
                         </Item>
                     </ScrollView >
                 );
@@ -424,7 +430,7 @@ export default class ARManagerPage extends Component {
                             </View>
                         </Modal>
                     );
-                } else if (times > 0 && success == 1) {
+                } else if (times >= 0 && success == 1) {
                     //成功了
                     return (
                         <Modal isVisible={true}
@@ -499,6 +505,12 @@ export default class ARManagerPage extends Component {
             });
 
         }
+
+
+    }
+    answerQuestion() {
+        //验证函数
+
 
 
     }

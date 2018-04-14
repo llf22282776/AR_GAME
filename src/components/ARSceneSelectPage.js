@@ -87,7 +87,7 @@ export default class ARSceneSelectPage extends Component {
                     <ViroARScene>
                         <ViroAmbientLight color="#ffffff" intensity={200} />
 
-                        <ViroNode position={[0, -1, -2]} dragType="FixedToWorld" onDrag={() => { }}>
+                        <ViroNode position={[0, -1, -2]} dragType="FixedToWorld" onDrag={undefined}>
            
                             <Viro3DObject
                                 source={require('../resources/res/icecreamman_anim/icecreamman_anim_a.vrx')}
