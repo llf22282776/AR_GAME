@@ -248,7 +248,19 @@ ViroAnimations.registerAnimations({
 
         },
         easing: "Bounce",
-        duration:1000
+        duration: 1000
+    },
+    initAnimateObject: {
+        properties: {
+
+            rotateX: "+90"
+
+        },
+        easing: "Bounce",
+        duration: 1
     },
 });
+
+export const vectorList = [3, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4] ;//12个数字
+export const xConfilt = [-4, -3.5, -2.5, -1.5, -1, -0.5, 0, -0.5, 1, 1.5, 2.5, 3.5, 4]; //13个数组
 

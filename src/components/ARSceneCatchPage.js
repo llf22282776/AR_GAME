@@ -104,7 +104,11 @@ export default class ARSceneCatchPage extends Component {
         this._setControllerNodeRef = this._setControllerNodeRef.bind(this);
 
     }
+    componentWillReceiveProps(props){
 
+
+
+    }
     /**
      * 
      *          需要在这里实现
@@ -135,13 +139,26 @@ export default class ARSceneCatchPage extends Component {
     }
     renderGame1() {
         //这里渲染game1
+        this.initBallPhyiscs = {
+            friction: 0.6,
+            type: 'Dynamic',
+            mass: 4,
+            enabled: true,
+            useGravity: true,
+            shape: {
+                type: 'Sphere',
+                params: [0.14]
+            },
+            restitution: 0.65
+        };
+        this.initBallPosition =  [0, -0.5, -1.0];
         return (
             <ViroARScene physicsWorld={{
                 gravity: [0, -1 * this.state.gForce, 0]
             }}>
                 <ViroAmbientLight color="#ffffff" intensity={200} />
                 <ViroController ref={this._setControllerNodeRef} />
-                <ViroNode position={[0, -1, -2]} dragType="FixedToWorld" onDrag={undefined}>
+                <ViroNode position={[0, -1, -4]} dragType="FixedToWorld" onDrag={undefined}>
 
                     <Viro3DObject
                         ref={(component) => { this._3dObject = component }}
@@ -163,9 +180,18 @@ export default class ARSceneCatchPage extends Component {
                 <ViroNode
                     ref={this._setBoxRef}
                     position={[0, 0, -1]}
+                    width={.5}
+                    height={.5}
+                    length={.5}
                     onClick={this.onClick}
                     viroTag="MySpecialBox"
-                    onCollision={this.onCollide}>
+                    onCollision={this.onCollide}
+                    physicsBody={
+                        this.initBallPhyiscs
+                    }
+                    viroTag={this.state.ballTag}
+                    onDrag={undefined} 
+                    >
 
                     <Viro3DObject
                         source={require('../resources/res/object_basketball_pbr.vrx')}
@@ -177,18 +203,16 @@ export default class ARSceneCatchPage extends Component {
                         require('../resources/res/blinn1_Roughness.png'),
                         require('../resources/res/blinn1_Normal_OpenGL.png')]}
                         type="VRX"
-                        physicsBody={
-                            this.state.initBallPhyiscs
-                        }
-                        viroTag={this.state.ballTag}
+                       
+                        
                         onClick={undefined}
-                        onCollision={this.onCollide}
-                        onDrag={() => { }} />
+                        
+                       />
 
                 </ViroNode>
                 <ViroSurface
                     position={[0, -1, 0]}
-                    scale={[6.0, 8.0, 3.0]}
+                    scale={[6.0, 8.0, 10.0]}
                     rotation={[-90, 0, 0]}
                     physicsBody={{ type: 'Static', restitution: 0.75 }}
                     onClickState={undefined}
@@ -239,23 +263,24 @@ export default class ARSceneCatchPage extends Component {
             this._3dObject.setNativeProps({
                 animation: this.state.animate
             });
+        
         } else if (collidedTag == this.state.unvisiableTag) {
-
+            console.log("before position:" + this.boxRef.props.position[0]+","+this.boxRef.props.position[1]+","+this.boxRef.props.position[2])
             TimeMix.setTimeout(() => {
-                console.log("  this.boxRef")
+                console.log(" this.boxRef")
                 console.log(this.boxRef);
                 this.boxRef.setNativeProps({ "physicsBody": null });
-                this.boxRef.setNativeProps({ "position": initBallPosition });
+                this._3dObject.setNativeProps({ "animation": undefined });
+                this.boxRef.setNativeProps({ "position": this.initBallPosition });
+                this._3dObject.setNativeProps({"rotation":[0,0,0]})
+                console.log("after position:" + this.boxRef.props.position[0]+","+this.boxRef.props.position[1]+","+this.boxRef.props.position[2])
                 TimeMix.setTimeout(() => {
-                    this.boxRef.setNativeProps({ "physicsBody": initBallPhyiscs });
+                    this.boxRef.setNativeProps({ "physicsBody": this.initBallPhyiscs });
+                 
                 }, 500);
             }, 500);
         }
-        // console.log("Viro box has collided on the " + collidedTag);
-        // if (collidedTag == "BallTag") {
-        //     this.floorSurface.setNativeProps({ materials: ["ground_hit"] });
-        // }
-
+   
     }
 
 
@@ -269,16 +294,21 @@ export default class ARSceneCatchPage extends Component {
         this.controllerRef.getControllerForwardAsync().then((forward) => {
             console.log("forward");
             console.log(forward);
-            var pushStrength = 1.5;
+            var pushStrength = 3.75; //在3-4之间徘徊 3 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4 (12个值)
+            var xConfict = 3.25//x轴上的 4  -3.5 -2.5  -1.5 0 1.5  2.5  3.5  4
+            //vip几率更高 非vip几率更低
             console.log("pushImpulse");
-            var pushImpulse = [forward[0] * pushStrength, forward[1] * pushStrength, forward[2] * pushStrength];
+            var pushImpulse = [xConfict , 5*pushStrength, -4*pushStrength];
+           // var pushImpulse = [0 * pushStrength, forward[1] * pushStrength, forward[2] * pushStrength];
             console.log(pushImpulse);
             this.boxRef.getTransformAsync().then((transform) => {
                 var pos = transform.position;
-                var pushPosition = [clickedPos[0] - pos[0], clickedPos[1] - pos[1], clickedPos[2] - pos[2]];
+                console.log("position");
+                console.log(pos);
+                var pushPosition = [0, 0, 0];
                 console.log("pushPosition");
                 console.log(pushPosition);
-                this.boxRef.applyImpulse(pushImpulse, pushPosition);
+               this.boxRef.applyImpulse(pushImpulse, pushPosition);
             }).catch(() => { });
         }).catch(() => { });
 
